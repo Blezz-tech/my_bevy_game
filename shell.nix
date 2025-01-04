@@ -38,5 +38,7 @@ mkShell rec {
     libxkbcommon
     wayland
   ];
+  RUST_SRC_PATH = rustPlatform.rustLibSrc;
+
   LD_LIBRARY_PATH = lib.makeLibraryPath buildInputs;
 }
