@@ -13,8 +13,11 @@ mkShell rec {
     rustfmt
 
     # Bevy
-    alsa-lib
     udev
+    alsa-lib
+    vulkan-loader
+
+    # advanced
     clang
     lld
     mold
@@ -35,15 +38,5 @@ mkShell rec {
     libxkbcommon
     wayland
   ];
-  RUST_SRC_PATH = rustPlatform.rustLibSrc;
-
-  shellHook = ''
-    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.lib.makeLibraryPath [
-      pkgs.alsa-lib
-      pkgs.udev
-      pkgs.vulkan-loader
-      pkgs.libxkbcommon
-    ]}"
-  '';
-
+  LD_LIBRARY_PATH = lib.makeLibraryPath buildInputs;
 }
